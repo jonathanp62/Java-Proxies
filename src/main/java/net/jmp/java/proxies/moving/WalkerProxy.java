@@ -29,12 +29,8 @@ package net.jmp.java.proxies.moving;
  */
 
 import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
-
-import static net.jmp.util.logging.LoggerUtils.entry;
-import static net.jmp.util.logging.LoggerUtils.exit;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -53,12 +49,14 @@ public class WalkerProxy implements InvocationHandler {
     /// The new instance method.
     ///
     /// @param walker   net.jmp.java.proxies.moving.Walker
-    /// @return         java.lang.Object
-    public static Object newInstance(final Walker walker) {
-        return Proxy.newProxyInstance(
+    /// @return         net.jmp.java.proxies.moving.Walker
+    public static Walker newInstance(final Walker walker) {
+        final Object proxy = Proxy.newProxyInstance(
                 walker.getClass().getClassLoader(),
                 walker.getClass().getInterfaces(),
                 new WalkerProxy(walker));
+
+        return (Walker) proxy;
     }
 
     /// The constructor.
@@ -81,7 +79,7 @@ public class WalkerProxy implements InvocationHandler {
         try {
             this.logger.debug("Before method: {}", method.getName());
 
-            result = method.invoke(walker, args);
+            result = method.invoke(this.walker, args);
         } catch (final Exception e) {
             this.logger.error("Unexpected invocation exception", e);
         } finally {

@@ -69,7 +69,7 @@ public class MoveDemo implements Demo {
 
         /* Proxy a class that implements an interface */
 
-        final Walker youngJonathan = (Walker) WalkerProxy.newInstance(new Jonathan());
+        final Walker youngJonathan = WalkerProxy.newInstance(new Jonathan());
 
         youngJonathan.move();
         youngJonathan.walkHome();
@@ -86,7 +86,7 @@ public class MoveDemo implements Demo {
     /// @param  <T>     The type
     /// @param  ifc     java.lang.Class<T>
     /// @return         T
-    private <T extends Moveable> T createProxyForInterface(Class<T> ifc) {
+    private <T extends Moveable> T createProxyForInterface(final Class<T> ifc) {
         if (this.logger.isTraceEnabled()) {
             this.logger.trace(entryWith(ifc));
         }
