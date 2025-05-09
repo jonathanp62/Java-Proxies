@@ -1,7 +1,7 @@
-package net.jmp.java.proxies;
+package net.jmp.java.proxies.moving;
 
 /*
- * (#)Main.java 0.1.0   05/08/2025
+ * (#)Destination.java  0.1.0   05/09/2025
  *
  * @author   Jonathan Parker
  *
@@ -28,30 +28,18 @@ package net.jmp.java.proxies;
  * SOFTWARE.
  */
 
-import net.jmp.java.proxies.moving.MoveDemo;
+import java.lang.annotation.*;
 
-/// The main application class.
+/// The destination annotation.
 ///
 /// @version    0.1.0
 /// @since      0.1.0
-public class Main implements Runnable {
-    /// The default constructor.
-    private Main() {
-        super();
-    }
-
-    /// The run method.
-    @Override
-    public void run() {
-        final MoveDemo moveDemo = new MoveDemo();
-
-        moveDemo.demo();
-    }
-
-    /// The main application entry point.
+@Documented
+@Retention(RetentionPolicy.RUNTIME)
+@Target( {ElementType.METHOD} )
+public @interface Destination {
+    /// Return the destination value.
     ///
-    /// @param  args    java.lang.String[]
-    public static void main(String[] args) {
-        new Main().run();
-    }
+    /// @return java.lang.String
+    String value();
 }

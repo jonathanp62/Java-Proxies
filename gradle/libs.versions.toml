@@ -28,9 +28,24 @@
 # SOFTWARE.
 
 [versions]
+ch-qos-logback-logback-classic = "1.5.18"
+ch-qos-logback-logback-core = "1.5.18"
 net-jmp-util-logging-logging-utilities = "1.2.0"
+org-slf4j-slf4j-api = "2.0.17"
 
 [libraries]
+ch-qos-logback-logback-classic = { module = "ch.qos.logback:logback-classic", version.ref = "ch-qos-logback-logback-classic" }
+ch-qos-logback-logback-core = { module = "ch.qos.logback:logback-core", version.ref = "ch-qos-logback-logback-core" }
 net-jmp-util-logging-logging-utilities = { module = "net.jmp.util.logging:logging-utilities", version.ref = "net-jmp-util-logging-logging-utilities" }
+org-slf4j-slf4j-api = { module = "org.slf4j:slf4j-api", version.ref = "org-slf4j-slf4j-api" }
 
 [bundles]
+logging = [
+    "net-jmp-util-logging-logging-utilities",
+    "org-slf4j-slf4j-api"
+]
+
+logging-runtime = [
+    "ch-qos-logback-logback-classic",
+    "ch-qos-logback-logback-core"
+]

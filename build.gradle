@@ -61,7 +61,9 @@ repositories {
 }
 
 dependencies {
-	implementation		(libs.net.jmp.util.logging.logging.utilities)
+	implementation		(libs.bundles.logging)
+
+	runtimeOnly			(libs.bundles.logging.runtime)
 
 	testRuntimeOnly		('org.junit.platform:junit-platform-launcher')
 }

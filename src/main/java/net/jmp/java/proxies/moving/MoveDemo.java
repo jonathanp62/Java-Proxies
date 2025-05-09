@@ -1,7 +1,7 @@
-package net.jmp.java.proxies;
+package net.jmp.java.proxies.moving;
 
 /*
- * (#)Main.java 0.1.0   05/08/2025
+ * (#)MoveDemo.java 0.1.0   05/09/2025
  *
  * @author   Jonathan Parker
  *
@@ -28,30 +28,27 @@ package net.jmp.java.proxies;
  * SOFTWARE.
  */
 
-import net.jmp.java.proxies.moving.MoveDemo;
+import net.jmp.java.proxies.Demo;
 
-/// The main application class.
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+/// The move demonstration class.
 ///
 /// @version    0.1.0
 /// @since      0.1.0
-public class Main implements Runnable {
+public class MoveDemo implements Demo {
+    /// The logger.
+    private final Logger logger = LoggerFactory.getLogger(MoveDemo.class);
+
     /// The default constructor.
-    private Main() {
+    public MoveDemo() {
         super();
     }
 
-    /// The run method.
+    /// The demo method.
     @Override
-    public void run() {
-        final MoveDemo moveDemo = new MoveDemo();
-
-        moveDemo.demo();
-    }
-
-    /// The main application entry point.
-    ///
-    /// @param  args    java.lang.String[]
-    public static void main(String[] args) {
-        new Main().run();
+    public void demo() {
+        this.logger.info("Move demo");
     }
 }
