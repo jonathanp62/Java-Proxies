@@ -34,8 +34,7 @@ import java.lang.reflect.Proxy;
 
 import net.jmp.java.proxies.Demo;
 
-import static net.jmp.util.logging.LoggerUtils.entry;
-import static net.jmp.util.logging.LoggerUtils.exit;
+import static net.jmp.util.logging.LoggerUtils.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,7 +43,6 @@ import org.slf4j.LoggerFactory;
 ///
 /// @version    0.1.0
 /// @since      0.1.0
-/// @link       https://docs.oracle.com/javase/8/docs/technotes/guides/reflection/proxy.html
 public class MoveDemo implements Demo {
     /// The logger.
     private final Logger logger = LoggerFactory.getLogger(this.getClass().getName());
@@ -61,17 +59,21 @@ public class MoveDemo implements Demo {
             this.logger.trace(entry());
         }
 
+        /* Proxy just the interface */
+
         final Walker walker = this.createProxyForInterface(Walker.class);
 
         walker.move();
         walker.walkHome();
         walker.walkToWork();
 
-        final Jonathan jonathan = new Jonathan();   // This instance is not proxied
+        /* Proxy a class that implements an interface */
 
-        jonathan.move();
-        jonathan.walkHome();
-        jonathan.walkToWork();
+        final Walker youngJonathan = (Walker) WalkerProxy.newInstance(new Jonathan());
+
+        youngJonathan.move();
+        youngJonathan.walkHome();
+        youngJonathan.walkToWork();
 
         if (this.logger.isTraceEnabled()) {
             this.logger.trace(exit());
@@ -85,11 +87,19 @@ public class MoveDemo implements Demo {
     /// @param  ifc     java.lang.Class<T>
     /// @return         T
     private <T extends Moveable> T createProxyForInterface(Class<T> ifc) {
+        if (this.logger.isTraceEnabled()) {
+            this.logger.trace(entryWith(ifc));
+        }
+
         final Object object = Proxy.newProxyInstance(
                 ifc.getClassLoader(),
                 new Class[] {ifc},
                 new MoveableHandler()
         );
+
+        if (this.logger.isTraceEnabled()) {
+            this.logger.trace(exitWith(object));
+        }
 
         return ifc.cast(object);
     }
@@ -109,6 +119,8 @@ public class MoveDemo implements Demo {
         /// @return         java.lang.Object
         @Override
         public Object invoke(final Object proxy, final Method method, final Object[] args) {
+            Object result = null;
+
             final Destination destination = method.getAnnotation(Destination.class);
 
             if (destination != null) {
@@ -119,7 +131,7 @@ public class MoveDemo implements Demo {
                 logger.info("Just moving");
             }
 
-            return null;
+            return result;
         }
     }
 }
