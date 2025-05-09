@@ -44,6 +44,7 @@ import org.slf4j.LoggerFactory;
 ///
 /// @version    0.1.0
 /// @since      0.1.0
+/// @link       https://docs.oracle.com/javase/8/docs/technotes/guides/reflection/proxy.html
 public class MoveDemo implements Demo {
     /// The logger.
     private final Logger logger = LoggerFactory.getLogger(this.getClass().getName());
@@ -60,9 +61,7 @@ public class MoveDemo implements Demo {
             this.logger.trace(entry());
         }
 
-        this.logger.info("Move demo");
-
-        final Walker walker = this.createProxy(Walker.class);
+        final Walker walker = this.createProxyForInterface(Walker.class);
 
         walker.move();
         walker.walkHome();
@@ -85,10 +84,12 @@ public class MoveDemo implements Demo {
     /// @param  <T>     The type
     /// @param  ifc     java.lang.Class<T>
     /// @return         T
-    private <T extends Moveable> T createProxy(Class<T> ifc) {
-        final Object object = Proxy.newProxyInstance(ifc.getClassLoader(),
+    private <T extends Moveable> T createProxyForInterface(Class<T> ifc) {
+        final Object object = Proxy.newProxyInstance(
+                ifc.getClassLoader(),
                 new Class[] {ifc},
-                new MoveableHandler());
+                new MoveableHandler()
+        );
 
         return ifc.cast(object);
     }
