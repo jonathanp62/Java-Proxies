@@ -1,7 +1,7 @@
 package net.jmp.java.proxies.moving;
 
 /*
- * (#)MoveDemo.java 0.1.0   05/09/2025
+ * (#)Jonathan.java 0.1.0   05/09/2025
  *
  * @author   Jonathan Parker
  *
@@ -28,11 +28,7 @@ package net.jmp.java.proxies.moving;
  * SOFTWARE.
  */
 
-import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
-import java.lang.reflect.Proxy;
-
-import net.jmp.java.proxies.Demo;
 
 import static net.jmp.util.logging.LoggerUtils.entry;
 import static net.jmp.util.logging.LoggerUtils.exit;
@@ -40,85 +36,74 @@ import static net.jmp.util.logging.LoggerUtils.exit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/// The move demonstration class.
+/// The Jonathan class.
 ///
 /// @version    0.1.0
 /// @since      0.1.0
-public class MoveDemo implements Demo {
+public class Jonathan implements Walker {
     /// The logger.
     private final Logger logger = LoggerFactory.getLogger(this.getClass().getName());
 
     /// The default constructor.
-    public MoveDemo() {
+    public Jonathan() {
         super();
     }
 
-    /// The demo method.
+    /// The walk home method.
+    @Destination("8528 Harris Avenue")
     @Override
-    public void demo() {
+    public void walkHome() {
         if (this.logger.isTraceEnabled()) {
             this.logger.trace(entry());
         }
 
-        this.logger.info("Move demo");
+        try {
+            final Method method = this.getClass().getMethod("walkHome");
+            final Destination destination = method.getAnnotation(Destination.class);
 
-        final Walker walker = this.createProxy(Walker.class);
-
-        walker.move();
-        walker.walkHome();
-        walker.walkToWork();
-
-        final Jonathan jonathan = new Jonathan();   // This instance is not proxied
-
-        jonathan.move();
-        jonathan.walkHome();
-        jonathan.walkToWork();
+            this.logger.info("Jonathan is walking home to {}", destination.value());
+        } catch (NoSuchMethodException e) {
+            this.logger.error("Unable to find method: walkHome", e);
+        }
 
         if (this.logger.isTraceEnabled()) {
             this.logger.trace(exit());
         }
     }
 
-    /// The create proxy method. Only
-    /// interfaces can be proxied.
-    ///
-    /// @param  <T>     The type
-    /// @param  ifc     java.lang.Class<T>
-    /// @return         T
-    private <T extends Moveable> T createProxy(Class<T> ifc) {
-        final Object object = Proxy.newProxyInstance(ifc.getClassLoader(),
-                new Class[] {ifc},
-                new MoveableHandler());
-
-        return ifc.cast(object);
-    }
-
-    /// The moveable handler class.
-    class MoveableHandler implements InvocationHandler {
-        /// The default constructor.
-        public MoveableHandler() {
-            super();
+    /// The walk to work method.
+    @Destination("3599 East Northern Parkway")
+    @Override
+    public void walkToWork() {
+        if (this.logger.isTraceEnabled()) {
+            this.logger.trace(entry());
         }
 
-        /// The invoke method.
-        ///
-        /// @param  proxy   java.lang.Object
-        /// @param  method  java.lang.reflect.Method
-        /// @param  args    java.lang.Object[]
-        /// @return         java.lang.Object
-        @Override
-        public Object invoke(final Object proxy, final Method method, final Object[] args) {
+        try {
+            final Method method = this.getClass().getMethod("walkToWork");
             final Destination destination = method.getAnnotation(Destination.class);
 
-            if (destination != null) {
-                logger.info("Moving to {}", destination.value());
-            }
+            this.logger.info("Jonathan is walking to work at {}", destination.value());
+        } catch (NoSuchMethodException e) {
+            this.logger.error("Unable to find method: walkToWork", e);
+        }
 
-            if ("move".equals(method.getName())) {
-                logger.info("Just moving");
-            }
+        if (this.logger.isTraceEnabled()) {
+            this.logger.trace(exit());
+        }
+    }
 
-            return null;
+    /// The move method.
+    @Override
+    public void move() {
+        if (this.logger.isTraceEnabled()) {
+            this.logger.trace(entry());
+        }
+
+        this.logger.info("I hate having to move");
+
+        if (this.logger.isTraceEnabled()) {
+            this.logger.trace(exit());
         }
     }
 }
