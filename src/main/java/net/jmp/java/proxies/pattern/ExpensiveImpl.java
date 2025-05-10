@@ -1,8 +1,7 @@
-package net.jmp.java.proxies;
+package net.jmp.java.proxies.pattern;
 
 /*
- * (#)Main.java 0.2.0   05/10/2025
- * (#)Main.java 0.1.0   05/08/2025
+ * (#)ExpensiveImpl.java    0.2.0   05/10/2025
  *
  * @author   Jonathan Parker
  *
@@ -29,34 +28,50 @@ package net.jmp.java.proxies;
  * SOFTWARE.
  */
 
-import net.jmp.java.proxies.moving.MoveDemo;
+import static net.jmp.util.logging.LoggerUtils.*;
 
-import net.jmp.java.proxies.pattern.PatternDemo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-/// The main application class.
+/// The expensive implementation class.
 ///
 /// @version    0.2.0
-/// @since      0.1.0
-public class Main implements Runnable {
+/// @since      0.2.0
+public class ExpensiveImpl implements Expensive {
+    /// The logger.
+    private final Logger logger = LoggerFactory.getLogger(this.getClass().getName());
+
     /// The default constructor.
-    private Main() {
+    public ExpensiveImpl() {
         super();
+
+        this.initialize();
     }
 
-    /// The run method.
+    /// The initialize method.
+    private void initialize() {
+        if (this.logger.isTraceEnabled()) {
+            this.logger.trace(entry());
+        }
+
+        this.logger.info("Initializing the expensive implementation");
+
+        if (this.logger.isTraceEnabled()) {
+            this.logger.trace(exit());
+        }
+    }
+
+    /// The process method.
     @Override
-    public void run() {
-        final MoveDemo moveDemo = new MoveDemo();
-        final PatternDemo patternDemo = new PatternDemo();
+    public void process() {
+        if (this.logger.isTraceEnabled()) {
+            this.logger.trace(entry());
+        }
 
-        moveDemo.demo();
-        patternDemo.demo();
-    }
+        this.logger.info("Processing the expensive object");
 
-    /// The main application entry point.
-    ///
-    /// @param  args    java.lang.String[]
-    public static void main(String[] args) {
-        new Main().run();
+        if (this.logger.isTraceEnabled()) {
+            this.logger.trace(exit());
+        }
     }
 }
