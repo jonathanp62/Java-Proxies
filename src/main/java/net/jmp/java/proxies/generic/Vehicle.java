@@ -1,8 +1,7 @@
-package net.jmp.java.proxies;
+package net.jmp.java.proxies.generic;
 
 /*
- * (#)Main.java 0.2.0   05/10/2025
- * (#)Main.java 0.1.0   05/08/2025
+ * (#)Vehicle.java  0.2.0   05/10/2025
  *
  * @author   Jonathan Parker
  *
@@ -29,36 +28,15 @@ package net.jmp.java.proxies;
  * SOFTWARE.
  */
 
-import net.jmp.java.proxies.generic.GenericDemo;
-import net.jmp.java.proxies.moving.MoveDemo;
-import net.jmp.java.proxies.pattern.PatternDemo;
-
-/// The main application class.
+/// The vehicle interface.
 ///
+/// @param  <T> The type of vehicle.
 /// @version    0.2.0
-/// @since      0.1.0
-public class Main implements Runnable {
-    /// The default constructor.
-    private Main() {
-        super();
-    }
-
-    /// The run method.
-    @Override
-    public void run() {
-        final MoveDemo moveDemo = new MoveDemo();
-        final PatternDemo patternDemo = new PatternDemo();
-        final GenericDemo genericDemo = new GenericDemo();
-
-        moveDemo.demo();
-        patternDemo.demo();
-        genericDemo.demo();
-    }
-
-    /// The main application entry point.
+/// @since      0.2.0
+public interface Vehicle<T> {
+    /// The operate method.
     ///
-    /// @param  args    java.lang.String[]
-    public static void main(String[] args) {
-        new Main().run();
-    }
+    /// @param  vehicle T
+    /// @return         T
+    T operate(final T vehicle);
 }

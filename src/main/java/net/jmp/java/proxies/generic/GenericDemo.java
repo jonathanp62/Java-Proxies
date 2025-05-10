@@ -1,8 +1,7 @@
-package net.jmp.java.proxies;
+package net.jmp.java.proxies.generic;
 
 /*
- * (#)Main.java 0.2.0   05/10/2025
- * (#)Main.java 0.1.0   05/08/2025
+ * (#)GenericDemo.java  0.2.0   05/10/2025
  *
  * @author   Jonathan Parker
  *
@@ -29,36 +28,35 @@ package net.jmp.java.proxies;
  * SOFTWARE.
  */
 
-import net.jmp.java.proxies.generic.GenericDemo;
-import net.jmp.java.proxies.moving.MoveDemo;
-import net.jmp.java.proxies.pattern.PatternDemo;
+import net.jmp.java.proxies.Demo;
 
-/// The main application class.
+import static net.jmp.util.logging.LoggerUtils.*;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+/// The generic demonstration class.
 ///
 /// @version    0.2.0
-/// @since      0.1.0
-public class Main implements Runnable {
+/// @since      0.2.0
+public class GenericDemo implements Demo {
+    /// The logger.
+    private final Logger logger = LoggerFactory.getLogger(this.getClass().getName());
+
     /// The default constructor.
-    private Main() {
+    public GenericDemo() {
         super();
     }
 
-    /// The run method.
+    /// The demo method.
     @Override
-    public void run() {
-        final MoveDemo moveDemo = new MoveDemo();
-        final PatternDemo patternDemo = new PatternDemo();
-        final GenericDemo genericDemo = new GenericDemo();
+    public void demo() {
+        if (this.logger.isTraceEnabled()) {
+            this.logger.trace(entry());
+        }
 
-        moveDemo.demo();
-        patternDemo.demo();
-        genericDemo.demo();
-    }
-
-    /// The main application entry point.
-    ///
-    /// @param  args    java.lang.String[]
-    public static void main(String[] args) {
-        new Main().run();
+        if (this.logger.isTraceEnabled()) {
+            this.logger.trace(exit());
+        }
     }
 }

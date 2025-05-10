@@ -1,8 +1,5 @@
-package net.jmp.java.proxies;
-
 /*
- * (#)Main.java 0.2.0   05/10/2025
- * (#)Main.java 0.1.0   05/08/2025
+ * (#)package-info.java 0.2.0   05/10/2025
  *
  * @author   Jonathan Parker
  *
@@ -29,36 +26,8 @@ package net.jmp.java.proxies;
  * SOFTWARE.
  */
 
-import net.jmp.java.proxies.generic.GenericDemo;
-import net.jmp.java.proxies.moving.MoveDemo;
-import net.jmp.java.proxies.pattern.PatternDemo;
-
-/// The main application class.
+/// The generic package.
 ///
 /// @version    0.2.0
-/// @since      0.1.0
-public class Main implements Runnable {
-    /// The default constructor.
-    private Main() {
-        super();
-    }
-
-    /// The run method.
-    @Override
-    public void run() {
-        final MoveDemo moveDemo = new MoveDemo();
-        final PatternDemo patternDemo = new PatternDemo();
-        final GenericDemo genericDemo = new GenericDemo();
-
-        moveDemo.demo();
-        patternDemo.demo();
-        genericDemo.demo();
-    }
-
-    /// The main application entry point.
-    ///
-    /// @param  args    java.lang.String[]
-    public static void main(String[] args) {
-        new Main().run();
-    }
-}
+/// @since      0.2.0
+package net.jmp.java.proxies.generic;
