@@ -1,7 +1,7 @@
 package net.jmp.java.proxies.generic;
 
 /*
- * (#)Boat.java 0.2.0   05/10/2025
+ * (#)Box.java  0.2.0   05/10/2025
  *
  * @author   Jonathan Parker
  *
@@ -28,14 +28,36 @@ package net.jmp.java.proxies.generic;
  * SOFTWARE.
  */
 
-/// The boat class.
+import java.util.List;
+
+/// The box interface.
 ///
-/// @param  <T> The type of boat.
+/// @param  <T> The type of item in the box.
 /// @version    0.2.0
 /// @since      0.2.0
-public class Boat<T> implements Vehicle<T> {
-    @Override
-    public T operate(final T vehicle) {
-        return vehicle;
-    }
+public interface Box<T> {
+    /// The pack method.
+    ///
+    /// @param  items java.util.List<T>
+    /// @return       int
+    int pack(List<T> items);
+
+    /// The close method.
+    void close();
+
+    /// The tape method.
+    ///
+    /// @param  pieces int
+    void tape(int pieces);
+
+    /// The ship method.
+    ///
+    /// @param  address java.lang.String
+    /// @return         java.lang.String
+    String ship(String address);
+
+    /// The open method.
+    ///
+    /// @return java.util.List<T>
+    List<T> open();
 }

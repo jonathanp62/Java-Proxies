@@ -1,7 +1,7 @@
 package net.jmp.java.proxies.generic;
 
 /*
- * (#)Car.java  0.2.0   05/10/2025
+ * (#)Book.java 0.2.0   05/11/2025
  *
  * @author   Jonathan Parker
  *
@@ -28,14 +28,16 @@ package net.jmp.java.proxies.generic;
  * SOFTWARE.
  */
 
-/// The car class.
+/// The book class.
 ///
-/// @param  <T> The type of car.
-/// @version    0.2.0
-/// @since      0.2.0
-public class Car<T> implements Vehicle<T> {
-    @Override
-    public T operate(final T vehicle) {
-        return vehicle;
-    }
+/// @param title    java.lang.String
+/// @param author   java.lang.String
+/// @param pages    int
+/// @version        0.2.0
+/// @since          0.2.0
+public record Book(
+    String title,
+    String author,
+    int pages
+) {
 }

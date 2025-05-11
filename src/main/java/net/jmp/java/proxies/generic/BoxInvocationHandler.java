@@ -1,7 +1,7 @@
 package net.jmp.java.proxies.generic;
 
 /*
- * (#)GenericDemo.java  0.2.0   05/10/2025
+ * (#)BoxInvocationHandler.java 0.2.0   05/11/2025
  *
  * @author   Jonathan Parker
  *
@@ -28,56 +28,55 @@ package net.jmp.java.proxies.generic;
  * SOFTWARE.
  */
 
-import java.util.List;
-
-import net.jmp.java.proxies.Demo;
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
 
 import static net.jmp.util.logging.LoggerUtils.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/// The generic demonstration class.
+/// The box invocation handler.
 ///
+/// @param  <T> The type of item in the box.
 /// @version    0.2.0
 /// @since      0.2.0
-public class GenericDemo implements Demo {
+public class BoxInvocationHandler<T> implements InvocationHandler {
     /// The logger.
     private final Logger logger = LoggerFactory.getLogger(this.getClass().getName());
 
-    /// The default constructor.
-    public GenericDemo() {
+    /// The box object.
+    private final Box<T> box;
+
+    /// The constructor.
+    ///
+    /// @param  box net.jmp.java.proxies.generic.Box<T>
+    public BoxInvocationHandler(final Box<T> box) {
         super();
+
+        this.box = box;
     }
 
-    /// The demo method.
+    /// The invoke method.
+    ///
+    /// @param  proxy   java.lang.Object
+    /// @param  method  java.lang.reflect.Method
+    /// @param  args    java.lang.Object[]
+    /// @return         java.lang.Object
     @Override
-    public void demo() {
+    public Object invoke(final Object proxy, final Method method, final Object[] args) throws Throwable {
         if (this.logger.isTraceEnabled()) {
-            this.logger.trace(entry());
+            this.logger.trace(entryWith(proxy, method, args));
         }
 
-        final Book persuader = new Book("The Persuader", "Lee Child", 496);
-        final Book theLastManager = new Book("The Last Manager", "John W. Miller", 368);
+        this.logger.debug("Handling method {}", method.getName());
 
-        final AmazonBox<Book> amazonBox = new AmazonBox<>();
-
-        amazonBox.setColor("brown");
-
-        final int itemsPacked = amazonBox.pack(List.of(persuader, theLastManager));
-
-        amazonBox.close();
-        amazonBox.tape(3);
-
-        final String shippingNumber = amazonBox.ship("123 Main Street");
-        final List<Book> books = amazonBox.open();
-
-        this.logger.info("The {} box has {} items packed", amazonBox.getColor(), itemsPacked);
-        this.logger.info("The shipping number was {}", shippingNumber);
-        this.logger.info("The books are {}", books);
+        final Object result = method.invoke(this.box, args);
 
         if (this.logger.isTraceEnabled()) {
-            this.logger.trace(exit());
+            this.logger.trace(exitWith(result));
         }
+
+        return result;
     }
 }
