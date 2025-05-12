@@ -1,9 +1,7 @@
-package net.jmp.java.proxies;
+package net.jmp.java.proxies.def;
 
 /*
- * (#)Main.java 0.3.0   05/12/2025
- * (#)Main.java 0.2.0   05/10/2025
- * (#)Main.java 0.1.0   05/08/2025
+ * (#)MessageProxy.java 0.3.0   05/12/2025
  *
  * @author   Jonathan Parker
  *
@@ -30,39 +28,13 @@ package net.jmp.java.proxies;
  * SOFTWARE.
  */
 
-import net.jmp.java.proxies.def.DefaultDemo;
-import net.jmp.java.proxies.generic.GenericDemo;
-import net.jmp.java.proxies.moving.MoveDemo;
-import net.jmp.java.proxies.pattern.PatternDemo;
-
-/// The main application class.
+/// The message proxy class.
 ///
 /// @version    0.3.0
-/// @since      0.1.0
-public class Main implements Runnable {
+/// @since      0.3.0
+public class MessageProxy {
     /// The default constructor.
-    private Main() {
+    public MessageProxy() {
         super();
-    }
-
-    /// The run method.
-    @Override
-    public void run() {
-        final MoveDemo moveDemo = new MoveDemo();
-        final PatternDemo patternDemo = new PatternDemo();
-        final GenericDemo genericDemo = new GenericDemo();
-        final DefaultDemo defaultDemo = new DefaultDemo();
-
-        moveDemo.demo();
-        patternDemo.demo();
-        genericDemo.demo();
-        defaultDemo.demo();
-    }
-
-    /// The main application entry point.
-    ///
-    /// @param  args    java.lang.String[]
-    public static void main(String[] args) {
-        new Main().run();
     }
 }
