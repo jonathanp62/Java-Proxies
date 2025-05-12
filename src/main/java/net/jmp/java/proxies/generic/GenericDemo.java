@@ -28,6 +28,8 @@ package net.jmp.java.proxies.generic;
  * SOFTWARE.
  */
 
+import java.lang.reflect.Proxy;
+
 import java.util.List;
 
 import net.jmp.java.proxies.Demo;
@@ -64,13 +66,19 @@ public class GenericDemo implements Demo {
 
         amazonBox.setColor("brown");
 
-        final int itemsPacked = amazonBox.pack(List.of(persuader, theLastManager));
+        final BoxInvocationHandler<Book> boxInvocationHandler = new BoxInvocationHandler<>(amazonBox);
+        final Box<Book> boxProxy = (Box<Book>) Proxy.newProxyInstance(
+                Box.class.getClassLoader(),
+                new Class[] { Box.class },
+                boxInvocationHandler);
 
-        amazonBox.close();
-        amazonBox.tape(3);
+        final int itemsPacked = boxProxy.pack(List.of(persuader, theLastManager));
 
-        final String shippingNumber = amazonBox.ship("123 Main Street");
-        final List<Book> books = amazonBox.open();
+        boxProxy.close();
+        boxProxy.tape(3);
+
+        final String shippingNumber = boxProxy.ship("123 Main Street");
+        final List<Book> books = boxProxy.open();
 
         this.logger.info("The {} box has {} items packed", amazonBox.getColor(), itemsPacked);
         this.logger.info("The shipping number was {}", shippingNumber);

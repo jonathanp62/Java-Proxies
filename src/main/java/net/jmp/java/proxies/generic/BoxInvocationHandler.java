@@ -65,11 +65,16 @@ public class BoxInvocationHandler<T> implements InvocationHandler {
     /// @return         java.lang.Object
     @Override
     public Object invoke(final Object proxy, final Method method, final Object[] args) throws Throwable {
+        /* Including the proxy class in trace logging causes a stack overflow at runtime when trace logging is enabled. */
+
         if (this.logger.isTraceEnabled()) {
-            this.logger.trace(entryWith(proxy, method, args));
+            this.logger.trace(entryWith(method, args));
         }
 
-        this.logger.debug("Handling method {}", method.getName());
+        if (this.logger.isDebugEnabled()) {
+            this.logger.debug("Proxy: {}", proxy.getClass().getName());
+            this.logger.debug("Handling method {}", method.getName());
+        }
 
         final Object result = method.invoke(this.box, args);
 

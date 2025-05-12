@@ -38,7 +38,7 @@
         </encoder>
     </appender>
 
-    <logger name="net.jmp.java.proxies.generic" additivity="false" level="trace">
+    <logger name="net.jmp.java.proxies.generic" additivity="false" level="info">
         <appender-ref ref="MAIN" />
     </logger>
     <logger name="net.jmp.java.proxies.moving" additivity="false" level="info">
