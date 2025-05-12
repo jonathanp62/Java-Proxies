@@ -66,19 +66,14 @@ public class GenericDemo implements Demo {
 
         amazonBox.setColor("brown");
 
-        final BoxInvocationHandler<Book> boxInvocationHandler = new BoxInvocationHandler<>(amazonBox);
-        final Box<Book> boxProxy = (Box<Book>) Proxy.newProxyInstance(
-                Box.class.getClassLoader(),
-                new Class[] { Box.class },
-                boxInvocationHandler);
+        final Box<Book> box = BoxProxy.newInstance(amazonBox);
+        final int itemsPacked = box.pack(List.of(persuader, theLastManager));
 
-        final int itemsPacked = boxProxy.pack(List.of(persuader, theLastManager));
+        box.close();
+        box.tape(3);
 
-        boxProxy.close();
-        boxProxy.tape(3);
-
-        final String shippingNumber = boxProxy.ship("123 Main Street");
-        final List<Book> books = boxProxy.open();
+        final String shippingNumber = box.ship("123 Main Street");
+        final List<Book> books = box.open();
 
         this.logger.info("The {} box has {} items packed", amazonBox.getColor(), itemsPacked);
         this.logger.info("The shipping number was {}", shippingNumber);
