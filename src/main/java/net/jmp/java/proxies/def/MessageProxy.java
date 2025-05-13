@@ -90,7 +90,7 @@ public class MessageProxy implements InvocationHandler {
 
             if (Modifier.isStatic(method.getModifiers())) {
                 /* Produces a method handle for a static method. */
-                
+
                 handle = lookup.findStatic(declaringClass, method.getName(), methodType);
             } else {
                 /* Produces an early-bound method handle for a virtual method. */
