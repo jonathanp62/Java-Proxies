@@ -62,6 +62,13 @@ public class DefaultDemo implements Demo {
             this.logger.info(messageObject.getDefaultMessage());
         }
 
+        final Message messageProxy = MessageProxy.newInstance(messageObject);
+
+        if (this.logger.isInfoEnabled()) {
+            this.logger.info(messageProxy.getMessage());
+            this.logger.info(messageProxy.getDefaultMessage());
+        }
+
         if (this.logger.isTraceEnabled()) {
             this.logger.trace(exit());
         }
