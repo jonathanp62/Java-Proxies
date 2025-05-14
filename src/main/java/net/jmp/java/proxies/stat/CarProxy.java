@@ -1,6 +1,7 @@
 package net.jmp.java.proxies.stat;
+
 /*
- * (#)StaticDemo.java   0.3.0   05/14/2025
+ * (#)CarProxy.java 0.3.0   05/14/2025
  *
  * @author   Jonathan Parker
  *
@@ -27,44 +28,57 @@ package net.jmp.java.proxies.stat;
  * SOFTWARE.
  */
 
-import net.jmp.java.proxies.Demo;
-
-import static net.jmp.util.logging.LoggerUtils.*;
+import java.lang.reflect.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/// The static method demonstration class.
+/// The car proxy class. Note that
+/// static methods cannot be proxied.
 ///
 /// @version    0.3.0
 /// @since      0.3.0
-public class StaticDemo implements Demo {
+public class CarProxy implements InvocationHandler {
     /// The logger.
     private final Logger logger = LoggerFactory.getLogger(this.getClass().getName());
 
+    /// The car.
+    private final Car car;
+
     /// The default constructor.
-    public StaticDemo() {
+    ///
+    /// @param  car net.jmp.java.proxies.stat.Car
+    public CarProxy(final Car car) {
         super();
+
+        this.car = car;
     }
 
+    /// The new instance method.
+    ///
+    /// @param  car net.jmp.java.proxies.stat.Car
+    /// @return     net.jmp.java.proxies.stat.Car
+    public static Car newInstance(final Car car) {
+        final Object proxy = Proxy.newProxyInstance(
+                car.getClass().getClassLoader(),
+                new Class[] { Car.class },
+                new CarProxy(car));
+
+        return (Car) proxy;
+    }
+
+    /// The invoke method.
+    ///
+    /// @param  proxy   java.lang.Object
+    /// @param  method  java.lang.reflect.Method
+    /// @param  args    java.lang.Object[]
+    /// @return         java.lang.Object
     @Override
-    public void demo() {
-        if (this.logger.isTraceEnabled()) {
-            this.logger.trace(entry());
+    public Object invoke(final Object proxy, final Method method, final Object[] args) throws Throwable {
+        if ("drive".equals(method.getName()) && this.logger.isInfoEnabled()) {
+            this.logger.info("Going to drive the {}", this.car.name());
         }
 
-        Car.start();
-
-        final Car volvo = new Volvo();
-
-        volvo.drive();
-
-        final Car honda = CarProxy.newInstance(new Honda());
-
-        honda.drive();
-
-        if (this.logger.isTraceEnabled()) {
-            this.logger.trace(exit());
-        }
+        return method.invoke(this.car, args);
     }
 }

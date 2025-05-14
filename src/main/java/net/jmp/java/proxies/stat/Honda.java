@@ -1,6 +1,7 @@
 package net.jmp.java.proxies.stat;
+
 /*
- * (#)StaticDemo.java   0.3.0   05/14/2025
+ * (#)Honda.java    0.3.0   05/14/2025
  *
  * @author   Jonathan Parker
  *
@@ -27,44 +28,43 @@ package net.jmp.java.proxies.stat;
  * SOFTWARE.
  */
 
-import net.jmp.java.proxies.Demo;
-
 import static net.jmp.util.logging.LoggerUtils.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/// The static method demonstration class.
+/// The Honda class.
 ///
 /// @version    0.3.0
 /// @since      0.3.0
-public class StaticDemo implements Demo {
+public class Honda implements Car {
     /// The logger.
     private final Logger logger = LoggerFactory.getLogger(this.getClass().getName());
 
     /// The default constructor.
-    public StaticDemo() {
+    public Honda() {
         super();
     }
 
+    /// The drive method.
     @Override
-    public void demo() {
+    public void drive() {
         if (this.logger.isTraceEnabled()) {
             this.logger.trace(entry());
         }
 
-        Car.start();
-
-        final Car volvo = new Volvo();
-
-        volvo.drive();
-
-        final Car honda = CarProxy.newInstance(new Honda());
-
-        honda.drive();
+        if (this.logger.isInfoEnabled()) {
+            this.logger.info("Driving the {}", this.name());
+        }
 
         if (this.logger.isTraceEnabled()) {
             this.logger.trace(exit());
         }
+    }
+
+    /// The name method.
+    @Override
+    public String name() {
+        return "Honda";
     }
 }

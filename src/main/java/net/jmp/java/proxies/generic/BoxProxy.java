@@ -1,6 +1,7 @@
 package net.jmp.java.proxies.generic;
 
 /*
+ * (#)BoxProxy.java 0.3.0   05/14/2025
  * (#)BoxProxy.java 0.2.0   05/12/2025
  *
  * @author   Jonathan Parker
@@ -32,7 +33,7 @@ import java.lang.reflect.Proxy;
 
 /// The box proxy class.
 ///
-/// @version    0.2.0
+/// @version    0.3.0
 /// @since      0.2.0
 public class BoxProxy {
     /// The default constructor.
@@ -45,6 +46,7 @@ public class BoxProxy {
     /// @param  <T> The type of item in the box.
     /// @param  box net.jmp.java.proxies.generic.Box
     /// @return     net.jmp.java.proxies.generic.Box
+    @SuppressWarnings("unchecked")
     public static <T> Box<T> newInstance(final Box<T> box) {
         final Object proxy = Proxy.newProxyInstance(
                 box.getClass().getClassLoader(),

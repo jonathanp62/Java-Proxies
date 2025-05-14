@@ -39,6 +39,11 @@ public interface Car {
     /// The drive method.
     void drive();
 
+    /// The name method.
+    ///
+    /// @return java.lang.String
+    String name();
+
     /// Start the car.
     static void start() {
         final Logger logger = LoggerFactory.getLogger(Car.class.getName());

@@ -53,10 +53,18 @@ public class Volvo implements Car {
             this.logger.trace(entry());
         }
 
-        this.logger.info("Driving the Volvo");
+        if (this.logger.isInfoEnabled()) {
+            this.logger.info("Driving the {}", this.name());
+        }
 
         if (this.logger.isTraceEnabled()) {
             this.logger.trace(exit());
         }
+    }
+
+    /// The name method.
+    @Override
+    public String name() {
+        return "Volvo";
     }
 }
