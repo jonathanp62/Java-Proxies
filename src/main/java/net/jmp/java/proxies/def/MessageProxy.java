@@ -43,6 +43,8 @@ public class MessageProxy implements InvocationHandler {
     private final Message object;
 
     /// The constructor.
+    ///
+    /// @param  message net.jmp.java.proxies.def.Message
     public MessageProxy(final Message message) {
         super();
 

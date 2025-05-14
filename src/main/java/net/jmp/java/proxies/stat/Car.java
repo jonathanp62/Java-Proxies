@@ -1,5 +1,7 @@
+package net.jmp.java.proxies.stat;
+
 /*
- * (#)package-info.java 0.3.0   05/12/2025
+ * (#)Car.java  0.3.0   05/14/2025
  *
  * @author   Jonathan Parker
  *
@@ -26,8 +28,21 @@
  * SOFTWARE.
  */
 
-/// The default method package.
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+/// The car interface.
 ///
 /// @version    0.3.0
 /// @since      0.3.0
-package net.jmp.java.proxies.def;
+public interface Car {
+    /// The drive method.
+    void drive();
+
+    /// Start the car.
+    static void start() {
+        final Logger logger = LoggerFactory.getLogger(Car.class.getName());
+
+        logger.info("Starting the car");
+    }
+}

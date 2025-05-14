@@ -1,5 +1,6 @@
+package net.jmp.java.proxies.stat;
 /*
- * (#)package-info.java 0.3.0   05/12/2025
+ * (#)StaticDemo.java   0.3.0   05/14/2025
  *
  * @author   Jonathan Parker
  *
@@ -26,8 +27,40 @@
  * SOFTWARE.
  */
 
-/// The default method package.
+import net.jmp.java.proxies.Demo;
+
+import static net.jmp.util.logging.LoggerUtils.*;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+/// The static method demonstration class.
 ///
 /// @version    0.3.0
 /// @since      0.3.0
-package net.jmp.java.proxies.def;
+public class StaticDemo implements Demo {
+    /// The logger.
+    private final Logger logger = LoggerFactory.getLogger(this.getClass().getName());
+
+    /// The default constructor.
+    public StaticDemo() {
+        super();
+    }
+
+    @Override
+    public void demo() {
+        if (this.logger.isTraceEnabled()) {
+            this.logger.trace(entry());
+        }
+
+        Car.start();
+
+        final Car volvo = new Volvo();
+
+        volvo.drive();
+        
+        if (this.logger.isTraceEnabled()) {
+            this.logger.trace(exit());
+        }
+    }
+}

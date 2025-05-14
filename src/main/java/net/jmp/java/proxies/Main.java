@@ -30,10 +30,13 @@ package net.jmp.java.proxies;
  * SOFTWARE.
  */
 
+import java.util.List;
+
 import net.jmp.java.proxies.def.DefaultDemo;
 import net.jmp.java.proxies.generic.GenericDemo;
 import net.jmp.java.proxies.moving.MoveDemo;
 import net.jmp.java.proxies.pattern.PatternDemo;
+import net.jmp.java.proxies.stat.StaticDemo;
 
 /// The main application class.
 ///
@@ -48,15 +51,15 @@ public class Main implements Runnable {
     /// The run method.
     @Override
     public void run() {
-        final MoveDemo moveDemo = new MoveDemo();
-        final PatternDemo patternDemo = new PatternDemo();
-        final GenericDemo genericDemo = new GenericDemo();
-        final DefaultDemo defaultDemo = new DefaultDemo();
+        final List<Demo> demos = List.of(
+                new MoveDemo(),
+                new PatternDemo(),
+                new GenericDemo(),
+                new DefaultDemo(),
+                new StaticDemo()
+        );
 
-        moveDemo.demo();
-        patternDemo.demo();
-        genericDemo.demo();
-        defaultDemo.demo();
+        demos.forEach(Demo::demo);
     }
 
     /// The main application entry point.

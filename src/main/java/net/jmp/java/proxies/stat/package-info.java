@@ -1,5 +1,5 @@
 /*
- * (#)package-info.java 0.3.0   05/12/2025
+ * (#)package-info.java 0.3.0   05/14/2025
  *
  * @author   Jonathan Parker
  *
@@ -26,8 +26,8 @@
  * SOFTWARE.
  */
 
-/// The default method package.
+/// The static method package.
 ///
 /// @version    0.3.0
 /// @since      0.3.0
-package net.jmp.java.proxies.def;
+package net.jmp.java.proxies.stat;

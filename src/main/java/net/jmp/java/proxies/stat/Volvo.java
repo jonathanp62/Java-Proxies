@@ -1,5 +1,7 @@
+package net.jmp.java.proxies.stat;
+
 /*
- * (#)package-info.java 0.3.0   05/12/2025
+ * (#)Volvo.java    0.3.0   05/14/2025
  *
  * @author   Jonathan Parker
  *
@@ -26,8 +28,35 @@
  * SOFTWARE.
  */
 
-/// The default method package.
+import static net.jmp.util.logging.LoggerUtils.*;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+/// The Volvo class.
 ///
 /// @version    0.3.0
 /// @since      0.3.0
-package net.jmp.java.proxies.def;
+public class Volvo implements Car {
+    /// The logger.
+    private final Logger logger = LoggerFactory.getLogger(this.getClass().getName());
+
+    /// The default constructor.
+    public Volvo() {
+        super();
+    }
+
+    /// The drive method.
+    @Override
+    public void drive() {
+        if (this.logger.isTraceEnabled()) {
+            this.logger.trace(entry());
+        }
+
+        this.logger.info("Driving the Volvo");
+
+        if (this.logger.isTraceEnabled()) {
+            this.logger.trace(exit());
+        }
+    }
+}

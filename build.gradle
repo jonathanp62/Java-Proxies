@@ -44,9 +44,11 @@ plugins {
 apply plugin: 'net.jmp.gradle.plugin.projectinfo-info'
 
 ext {
+	javaMainClass = 'net.jmp.java.proxies.Main'
 	project.group = 'net.jmp.java.proxies'
 	project.version = '0.3.0'
 	project.description = 'to demonstrate Java proxies'
+	useAssertions = '-ea'
 }
 
 java.sourceCompatibility = JavaVersion.VERSION_24
@@ -85,10 +87,13 @@ tasks.withType(Javadoc).configureEach {
     sjdo.version(true)
 }
 
-tasks.named('test') {
-	useJUnitPlatform()
+/*
+ * Execute with - gradle execute instead of gradle run
+ */
 
-	testLogging {
-		events "passed", "skipped", "failed"
-	}
+tasks.register('execute', JavaExec) {
+	allJvmArgs = [useAssertions] as List<String>
+	classpath = sourceSets.main.runtimeClasspath
+	javaLauncher.set(javaToolchains.launcherFor(java.toolchain))
+	mainClass = javaMainClass
 }
